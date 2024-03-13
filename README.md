@@ -26,6 +26,12 @@
 <img width="720" alt="스크린샷 2024-03-13 오후 2 56 22" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/dc90929b-1d73-4ac2-afb8-3b6e1ba316d0">
 <img width="1136" alt="스크린샷 2024-03-13 오후 2 57 20" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/1645e053-3ac9-484e-86a7-20b9b7479e19">
 
+프로젝트의 파일 디렉터리는 다음과 같은 구조로 정리했다. 소스코드와 데이터를 분리해서 정리했고, 데이터 작업을 진행할 ETL과 오케스트레이션을 진행항 pipeline을 나눠서 SRC를 정리했다.
+데이터가 많아지고, 각 부서별로 필요한 데이터가 많아짐에 따라 각 디렉터리 안에서도 추가로 정리해야 할 것 같긴 하지만, 가독성을 위해 간단하게만 정리했다.
+
+<img width="449" alt="스크린샷 2024-03-14 오전 12 02 57" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/149dbbd7-8505-46cf-8e63-5de35193a654">
+
+
 # 데이터 ETL
 다음은 데이터 Extraction (추출), Transfer (변환), Load(로드) ETL 과정을 보여주는 이미지이다.  
 <img width="616" alt="스크린샷 2024-03-11 오후 8 30 47" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/2ef62dea-eb8a-4fff-87ef-5f488aed05f4">
@@ -36,7 +42,9 @@
 데이터 흐름을 자동화하기 위한 오픈 소스 프로그램. 가장 대표적인 특징은 UI가 편리하고 데이터 흐름을 잘 모니터링할 수 있다는 강점이 있다.
 - Flowfile Controller에서 FlowFile 형태로 데이터 전송
 즉, 여러 부서로 자동화가 많은 데이터 같은 경우에 매우 편리할 것으로 판단. 
-**Apache Airflow:** 에어비엔비 개발자가 오픈 소스 프로그램으로 시작한 태스크 자동화 시스템. 대표적인 특징으로 효율적인 데이터 오케스트레이션 기능을 보유하고 있다. Data orchestration: 사일로화된 데이터를 하나로 결합해 분석에 용이하게 만들어주는 자동화 방법. Data Streaming Solution로 적합하기 때문에, Data 전처리 과정으로는 사용하지 않을 계획. 
+
+**Apache Airflow:**
+에어비엔비 개발자가 오픈 소스 프로그램으로 시작한 태스크 자동화 시스템. 대표적인 특징으로 효율적인 데이터 오케스트레이션 기능을 보유하고 있다. Data orchestration: 사일로화된 데이터를 하나로 결합해 분석에 용이하게 만들어주는 자동화 방법. Data Streaming Solution로 적합하기 때문에, Data 전처리 과정으로는 사용하지 않을 계획. 
 - ETF 파이프라인을 Directed Acyclic Graphs를 통해 반복적인 태스크를 실행하하면서도 순환 실행을 방지해 주는 용도.
 (미리 익혀두면 좋을 것 같아서, 간단한 Airflow 코드를 사용해 매일 단위로 CSV를 형성할 수 있는 코드를 작성)
 
