@@ -48,6 +48,16 @@
 - ETF 파이프라인을 Directed Acyclic Graphs를 통해 반복적인 태스크를 실행하하면서도 순환 실행을 방지해 주는 용도.
 (미리 익혀두면 좋을 것 같아서, 간단한 Airflow 코드를 사용해 매일 단위로 CSV를 형성할 수 있는 코드를 작성)
 
+# Apache Airflow 
+
+에어플로우 documentation을 읽고 설치하는 방법을 찾았다.태스크가 많아지기 전까지는 standalone를 사용해도 괜찮다고 나와 있다. 따로 찾아보니 프로젝트가 크지 않을 때는, SequentialExecutor 통해서 airflow를 태스크를 실행해도 괜찮지만, 데이터가 많아지고, 프로그램이 복잡해지면서 분산 적업이나 다른 프레임워크와 사용할 수 없기 때문에 추천하지 않는다고 한다. 
+조금 더 찾아보니, 나중에는 CeleryExecutor나 KubernetesExecutor 같은 프레임워크를 사용할 수 있다고 한다. 문제는 Executor 중에서 Local은 병렬처리가 안되고 클러스터 형식으로 작업을 나눌 수 없다는 것이다. 각 Executor 별로 장단점 그리고 언제 사용하는지에 대한 아주 좋은 글이 있어 참고했으며, 추후에도 내가 참고할 수 있게 링크를 첨부했다: https://magpienote.tistory.com/225. 
+
+<img width="574" alt="스크린샷 2024-03-14 오후 9 03 06" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/d6906224-2c68-4c57-b70b-53049f8e10d1">
+
+src/pipeline/firebase_to_csv_dag.py 파일을 통해 firebase to csv라는 DAG 객체를 만드는 스크립트를 작성했다. 처음에 코드를 작성하면서 DAG함수와 default_args dict을 만들기 때문에 자동화가 여기서 진행되는 줄 알았지만, 다큐멘터리를 확인해본 결과 단순 객체를 만드는 스크립트라고 명시되어 있었다. Directed Acyclic Graph라는 이름을 갖고 있기 때문에, 코테 준비하면서 배운 Graph 자료구조가 떠올랐다. 여기서 유추해볼 수 있었던 부분은 DAG 객체 안에서 여러가지 태스크가 있을텐데 이런 태스크들이 그래프 안에 있는 노드라고 생각하면 될 것 같고, 우리가 그 순서와 방향을 정해준다는 느낌을 받았다. 캘박 데이터로 따지면, 해볼 수 있을 만한 몇가지 태스크는 매일 로그인한 유저들의 데이터를 추출하고, 이후 meetingsCollection과 events를 추출해 하나의 csv 파일로 담는 스케줄링을 진행할 수 있을 것 같다. 
+
+또한 여기서 느낀 점은 데이터 태스크가 많아지고, 스케줄링을 많이 할 수록 모든 작업이 정상적으로 작동되는지 모니터링하고 디버깅 해주는 작업이 정말 중요할 것 같다는 생각이다. 특히 데이터가 정말 많을 경우 문제가 생길 수 있기 때문에 태스크 디자인할 때 유의해야 할 것으로 보인다. 위에 예시에서 만약 userCollection을 먼저 처리하지 않고, Event나 meetingsCollection을 추출하게 되면 나중에 데이터를 전환하거나, 자동으로 처리할 때 큰 문제가 생길 수 있겠다는 생각이 들었다. 실수를 하지 않기 위해 airflow best practices를 자주 참고해야겠다. 
 
 
   
