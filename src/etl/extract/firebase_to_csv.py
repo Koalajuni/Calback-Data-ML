@@ -9,18 +9,22 @@ collection_path = 'userCollection'
 
 
 def export_to_csv(output_csv_path):
-    data = []
+    try:
+        data = []
 
-    snapshot = firestore.client().collection(collection_path).get()  #파이어베이스에서 userCollection 가져오기 
+        snapshot = firestore.client().collection(
+            collection_path).get()  # 파이어베이스에서 userCollection 가져오기
 
-    for doc in snapshot:
-        data.append(doc.to_dict())
+        for doc in snapshot:
+            data.append(doc.to_dict())
 
-    df = pd.DataFrame(data)   #pandas 데이터로 가져오기 
+        df = pd.DataFrame(data)  # pandas 데이터로 가져오기
 
-    df.to_csv(output_csv_path, index=False)
+        df.to_csv(output_csv_path, index=False)
 
-    print('데이터가 성공적으로 추출 됐습니다')
+        print('export_to_csv 성공적으로 실행됐습니다')
+    except Exception as e:
+        print('export_to_csv 함수가 실행되지 않았습니다:', e)
 
 
 if __name__ == '__main__':

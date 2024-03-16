@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 from airflow import DAG
-from airflow.operators.python_operator import PythonOperator
+from airflow.operators.python import PythonOperator
 from src.etl.extract.firebase_to_csv import firebase_to_csv
 
 default_args = {
@@ -19,7 +19,7 @@ dag = DAG(
 
 export_task = PythonOperator(
     task_id='export_to_csv',
-    python_callable=firebase_to_csv.export_to_csv,  
+    python_callable=firebase_to_csv.export_to_csv,
     dag=dag,
 )
 
