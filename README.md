@@ -38,6 +38,7 @@
 
 ## 추출:
 우선 데이터를 CSV 형태로 받아오기 위해 Firebase Realtime Database를 CSV 형태로 추출해야 한다. 자동화 과정에서 사용할 수 있는 여려개의 프레임워크가 있다는 것을 조사했다. 
+
 **Apache NiFi:** 
 데이터 흐름을 자동화하기 위한 오픈 소스 프로그램. 가장 대표적인 특징은 UI가 편리하고 데이터 흐름을 잘 모니터링할 수 있다는 강점이 있다.
 - Flowfile Controller에서 FlowFile 형태로 데이터 전송
