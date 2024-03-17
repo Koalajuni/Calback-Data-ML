@@ -68,11 +68,15 @@ firebase_to_csv function이 잘 돌아가는지 확인하기 위해 실행시켜
 <img width="1173" alt="스크린샷 2024-03-17 오후 4 45 05" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/f92b3682-b489-4b0e-b5dd-60080de74c52">
 
 에러 문구를 확인해 본 결과 export_to_csv 함수에서 output_csv_path 패러미터가 안 읽혀진다는 것을 볼 수 있었다. firebase_to_csv에서는 잘 작동 됐기 때문에,  DAG가 실행되는 방식에서 버그가 일어나고 있다는 것을 인지할 수 있었다.
-DAG에서 Export Task Operator를 확인해 보니, python_callable = export_to_csv만 실행하고, 패러미터를 추가하지 않은 것을 확인할 수 있었고, 아래 op_kwargs= {path}로 수정한 후 정상적으로 DAG가 작동되는 것을 볼 수 있었다. 
+DAG에서 Export Task Operator를 확인해 보니, python_callable = export_to_csv만 실행하고, 패러미터를 추가하지 않은 것을 확인할 수 있었고, 아래 op_kwargs= {path}로 수정한 후 정상적으로 DAG가 작동되는 것을 볼 수 있었다.
+
 <img width="782" alt="스크린샷 2024-03-17 오후 4 56 40" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/c51fc7da-2713-43a4-9038-2f908f019fd7">
 
-왜 이런 실수를 했을까 고민을 한 후 다음과 같은 이유를 깨달을 수 있었다.  
+
+왜 이런 실수를 했을까 고민을 한 후 다음과 같은 이유를 깨달을 수 있었다. 
+
 (1) DAG Bash Operator, DAG Python Operator에 Documentation에서 op_kwargs 변수를 확인하지 못했던 실수.
+
 (2) DAG 코드에서 디버깅을 추가하지 못했던 실수 
 
 익숙하지 않더라도 차근차근히 읽다보면 충분히 만회할 수 있던 실수인 것 같아서, 다음에는 조금 더 꼼꼼히 프로젝트를 진행해야겠다는 다짐을 했다. 
