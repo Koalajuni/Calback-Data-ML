@@ -61,14 +61,22 @@ src/pipeline/firebase_to_csv_dag.py 파일을 통해 firebase to csv라는 DAG �
 또한 여기서 느낀 점은 데이터 태스크가 많아지고, 스케줄링을 많이 할 수록 모든 작업이 정상적으로 작동되는지 모니터링하고 디버깅 해주는 작업이 정말 중요할 것 같다는 생각이다. 특히 데이터가 정말 많을 경우 문제가 생길 수 있기 때문에 태스크 디자인할 때 유의해야 할 것으로 보인다. 위에 예시에서 만약 userCollection을 먼저 처리하지 않고, Event나 meetingsCollection을 추출하게 되면 나중에 데이터를 전환하거나, 자동으로 처리할 때 큰 문제가 생길 수 있겠다는 생각이 들었다. 실수를 하지 않기 위해 airflow best practices를 자주 참고해야겠다. 실무에서는 어떤 에러들이 많은지 조금 더 확인하기 위해 찾아보니 Buzz님께서 친절하게 알려주신 블로그가 있어 링크를 첨부했다: https://medium.com/29cm/29cm-apache-airflow-%EC%9A%B4%EC%98%81%EA%B8%B0-da6b5535f7a6 
 위에 블로그에서도 Queue 무한 대기 문제가 있었으며, CelerExecutor와 Scheduler 사이에 통신 에러 때문에 일어났다고 적혀있다. 버전 업그레이드 이후 해결 됐다고 하지만, 이러한 문제를 미리 대비하기 위해 디버깅이 중요성을 보여주는 것 같다. 
 
-### 버그 1
+## 버그 1
 firebase_to_csv function이 잘 돌아가는지 확인하기 위해 실행시켜본 결과, raw data 디렉터리로 유저들의 정보가 담겨진 csv 파일이 잘 만들어졌다. 
 코드는 정상적으로 작동이 됐지만, DAG를 실행해 본 결과 다음과 같은 버그가 생겼다. 
 
 <img width="1173" alt="스크린샷 2024-03-17 오후 4 45 05" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/f92b3682-b489-4b0e-b5dd-60080de74c52">
 
+에러 문구를 확인해 본 결과 export_to_csv 함수에서 output_csv_path 패러미터가 안 읽혀진다는 것을 볼 수 있었다. firebase_to_csv에서는 잘 작동 됐기 때문에,  DAG가 실행되는 방식에서 버그가 일어나고 있다는 것을 인지할 수 있었다.
+DAG에서 Export Task Operator를 확인해 보니, python_callable = export_to_csv만 실행하고, 패러미터를 추가하지 않은 것을 확인할 수 있었고, 아래 op_kwargs= {path}로 수정한 후 정상적으로 DAG가 작동되는 것을 볼 수 있었다. 
+<img width="782" alt="스크린샷 2024-03-17 오후 4 56 40" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/c51fc7da-2713-43a4-9038-2f908f019fd7">
 
+왜 이런 실수를 했을까 고민을 한 후 다음과 같은 이유를 깨달을 수 있었다.  
+(1) DAG Bash Operator, DAG Python Operator에 Documentation에서 op_kwargs 변수를 확인하지 못했던 실수.
+(2) DAG 코드에서 디버깅을 추가하지 못했던 실수 
 
+익숙하지 않더라도 차근차근히 읽다보면 충분히 만회할 수 있던 실수인 것 같아서, 다음에는 조금 더 꼼꼼히 프로젝트를 진행해야겠다는 다짐을 했다. 
+심지어 다큐멘테션에서는 @task decorator를 사용하는 것을 권장했었는데, 이 버그를 겪고 나서야 왜 이 방법이 나은지 알 수 있었다. @task로 코드를 작성하면 파이썬에서 사용하는 형식 def export_to_csv(ds=None, **kwargs)으로 코드를 작성할 수 있기 떄문이다. 
 
 **웨어하우스 선택 로직:**
 
