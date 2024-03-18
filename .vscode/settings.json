@@ -1,3 +1,6 @@
 {
-    "python.pythonPath": "/Users/hyounjun/Desktop/Calback-Data-ML/venv/bin/python"
+    "python.pythonPath": "/Users/hyounjun/Desktop/Calback-Data-ML/venv/bin/python",
+    "python.analysis.extraPaths": [
+        "./src/etl/extract"
+    ]
 }
