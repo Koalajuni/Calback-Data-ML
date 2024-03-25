@@ -1,4 +1,4 @@
-from src.etl.extract.firebase_initializer import initialize_firebase
+from etl.extract.firebase_initializer import initialize_firebase
 from firebase_admin import firestore
 import pandas as pd
 
@@ -45,5 +45,3 @@ def export_meetings_to_csv(output_csv_path):
         print('meetings_export_to_csv 성공적으로 실행됐습니다')
     except Exception as e:
         print('meetings_export_to_csv 함수가 실행되지 않았습니다:', e)
-
-    # export_user_to_csv(output_csv_path=csv_file_path)

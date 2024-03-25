@@ -1,10 +1,9 @@
 from datetime import datetime, timedelta
 from airflow.models.dag import DAG
 from airflow.operators.python import PythonOperator
-from src.etl.extract.firebase_to_csv import export_user_to_csv, export_meetings_to_csv
-from src.etl.extract.firebase_events_to_csv import export_events_to_csv
+from etl.extract.firebase_to_csv import export_user_to_csv, export_meetings_to_csv
+from etl.extract.firebase_events_to_csv import export_events_to_csv
 import pendulum
-
 
 kst = pendulum.timezone("Asia/Seoul")
 
@@ -43,7 +42,6 @@ with DAG(
         python_callable=export_events_to_csv,
         op_kwargs={
             'output_csv_path': '/Users/hyounjun/Desktop/Calback-Data-ML/data/raw/events/output.csv',
-            # Use the execution date of the DAG run as the date parameter
             'date': '{{ ds }}'
         },
         dag=dag,

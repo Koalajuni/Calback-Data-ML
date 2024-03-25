@@ -26,25 +26,16 @@ def initialize_firebase():
 def initialize_google_analytics():
     # Load Google Analytics credentials from a JSON file
     credentials_path = os.path.join(os.path.dirname(
-        __file__), '/Users/hyounjun/Desktop/Calback-Data-ML/config/google_analytics.json')
+        __file__), '../../../config/google_analytics.json')
     with open(credentials_path) as f:
-        credentials = json.load(f)
+        json_acct_info = json.load(f)
 
-        analytics_config = credentials['analytics_config']
-
-    service_account_email = {'client_email': analytics_config['client_email']}
-    print("service_account_email is", service_account_email)
-    # private_key = {'private_key': analytics_config['private_key']}
-    # print("private_key is", private_key)
-    client_id = {'client_id': analytics_config['client_id']}
-    print("client_id is", client_id)
+        # analytics_config = credentials['analytics_config']
 
     # Create a service object for the Google Analytics Reporting API
-    # credentials = service_account.Credentials.from_service_account_info({
-    #     "client_email": service_account_email,
-    #     "private_key": private_key,
-    #     "scopes": ["https://www.googleapis.com/auth/analytics.readonly"]
-    # })
-    # service = build('analyticsreporting', 'v4', credentials=credentials)
+    credentials = service_account.Credentials.from_service_account_info(
+        json_acct_info)
 
-    # return service, view_id
+    service = build('analyticsreporting', 'v4', credentials=credentials)
+
+    return service
