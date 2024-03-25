@@ -81,7 +81,18 @@ DAG에서 Export Task Operator를 확인해 보니, python_callable = export_to_
 (2) DAG 코드에서 디버깅을 추가하지 못했던 실수 
 
 익숙하지 않더라도 차근차근히 읽다보면 충분히 만회할 수 있던 실수인 것 같아서, 다음에는 조금 더 꼼꼼히 프로젝트를 진행해야겠다는 다짐을 했다. 
-심지어 문서에서는 @task decorator를 사용하는 것을 권장했었는데, 이 버그를 겪고 나서야 왜 이 방법이 나은지 알 수 있었다. @task로 코드를 작성하면 파이썬에서 사용하는 형식 def export_to_csv(ds=None, **kwargs)으로 코드를 작성할 수 있기 때문이다. 하지만 Task가 많아지면 지저분해 보일 수 있다는 것이 문제일 것 같다.  
+심지어 문서에서는 @task decorator를 사용하는 것을 권장했었는데, 이 버그를 겪고 나서야 왜 이 방법이 나은지 알 수 있었다. @task로 코드를 작성하면 파이썬에서 사용하는 형식 def export_to_csv(ds=None, **kwargs)으로 코드를 작성할 수 있기 때문이다. 하지만 Task가 많아지면 지저분해 보일 수 있다는 것이 문제일 것 같다. 
+
+## 에어플로우 실행결과 
+
+airflow webserver를 통해 태스크들이 잘 작동되고 있는지 확인할 수 있었다. 
+
+<img width="1392" alt="스크린샷 2024-03-25 오후 9 08 46" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/72a058e2-55ba-4b47-8857-6d39956d0500">
+
+폴더 디렉터리를 확인해 본 결과, 3만개가 넘는 row의 데이터가 있는 output.csv파일이 성공적으로 잘 작동되는 것을 볼 수 있다. 
+
+<img width="578" alt="스크린샷 2024-03-25 오후 9 16 17" src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/05b2f41e-355c-4809-a74e-39690e26f740">
+
 
 **웨어하우스 선택 로직:**
 
