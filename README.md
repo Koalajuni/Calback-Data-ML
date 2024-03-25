@@ -1,4 +1,16 @@
-# Calback-Data-ML (진행 중) 
+# Calback-Data-ML
+
+### 프로젝트 현황도:  
+
+- 데이터 자동 추출 - apache airflow  **(완료) **
+- 데이터 변환  **(진행 중) **
+- 데이터 적재 BigQuery Warehouse  
+- 데이터 전처리 BigQuery
+- 머신 러닝 트레이닝 BigQuery/Tensorflow
+- 모델 분석 및 하이퍼파라미터 튜닝
+- 결과  
+
+
 
 ## 배경 
 
