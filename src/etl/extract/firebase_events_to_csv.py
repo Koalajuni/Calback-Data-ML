@@ -5,7 +5,7 @@ import pandas as pd
 
 def export_events_to_csv(output_csv_path, view_id, date_range_start, date_range_end):
     try:
-        # Initialize Google Analytics
+        
         google_analytics_service, view_id = initialize_google_analytics()
 
         # Make a request to retrieve event data
@@ -42,16 +42,16 @@ def export_events_to_csv(output_csv_path, view_id, date_range_start, date_range_
 
 
 if __name__ == '__main__':
-    # Initialize Firebase and Google Analytics
+    
     google_analytics_service, view_id = initialize_google_analytics()
 
-    # Specify the date range for the events
+    
     date_range_start = '2024-03-01'  # Example start date
     date_range_end = '2024-03-14'    # Example end date
 
-    # Specify the output CSV file path
+    
     output_csv_path = '/Users/hyounjun/Desktop/Calback-Data-ML/data/raw/events/output.csv'
 
-    # Export events to CSV
+    
     export_events_to_csv(output_csv_path, view_id,
                          date_range_start, date_range_end)
