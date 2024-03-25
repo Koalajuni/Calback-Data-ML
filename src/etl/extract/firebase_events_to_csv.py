@@ -1,12 +1,11 @@
-# import datetime
-# from firebase_initializer import initialize_google_analytics
-# import pandas as pd
+import datetime
+from firebase_initializer import initialize_google_analytics
+import pandas as pd
 
 
-def export_events_to_csv(output_csv_path, view_id, date_range_start, date_range_end):
+def export_events_to_csv(output_csv_path, date_range_start, date_range_end):
     try:
-
-        google_analytics_service, view_id = initialize_google_analytics()
+        google_analytics_service = initialize_google_analytics()
 
         response = google_analytics_service.reports().batchGet(
             body={
@@ -41,12 +40,12 @@ def export_events_to_csv(output_csv_path, view_id, date_range_start, date_range_
 
 if __name__ == '__main__':
 
-    google_analytics_service, view_id = initialize_google_analytics()
+    google_analytics_service = initialize_google_analytics()
 
-    date_range_start = '2024-03-01'  # Example start date
-    date_range_end = '2024-03-14'    # Example end date
+    date_range_start = '2024-03-01'
+    date_range_end = '2024-03-14'
 
     output_csv_path = '/Users/hyounjun/Desktop/Calback-Data-ML/data/raw/events/output.csv'
 
-    export_events_to_csv(output_csv_path, view_id,
+    export_events_to_csv(output_csv_path,
                          date_range_start, date_range_end)
