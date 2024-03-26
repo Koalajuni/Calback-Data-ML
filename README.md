@@ -118,7 +118,7 @@ airflow webserver를 통해 태스크들이 잘 작동되고 있는지 확인할
 이제 데이터 웨하우스에 있는 수 많은 데이터를 원하는 형식으로 전환하는 적업을 할 예정이다. 
 생각보다 많은 시간을 계획하는 데만 사용해 머리가 아팠지만, 여기서 데이터를 잘못 전환하면 나중에 더 힘들어질 수 있기 때문에 최대한 로지컬하게 데이터를 정리해 봤다. 아래는 지금 추출한 데이터를 정리한 도형이다. 나중에 모델링 하거나 BI 만들 때 편리할 수 있게 정리했으며, 날짜별로 특정 사용자가 진행한 행동을 나타날 수 있는 테이블로 전환할 계획이다. 
 
-<img src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/922a29a2-d8e4-4917-ada4-08e725045b01" width="200" height="200">
+<img src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/922a29a2-d8e4-4917-ada4-08e725045b01" width="500" height="500">
 
 
 
