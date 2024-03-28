@@ -26,7 +26,7 @@ def initialize_firebase():
 def initialize_google_analytics():
     # Load Google Analytics credentials from a JSON file
     credentials_path = os.path.join(os.path.dirname(
-        __file__), '../../../config/google_analytics.json')
+        __file__), '../../../config/google_analytics_4.json')
     with open(credentials_path) as f:
         json_acct_info = json.load(f)
 
