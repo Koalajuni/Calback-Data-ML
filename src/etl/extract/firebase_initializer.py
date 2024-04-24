@@ -2,8 +2,10 @@ import json
 import os
 import firebase_admin
 from firebase_admin import credentials
+from google.oauth2.service_account import Credentials
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
+from google.analytics.data_v1beta import BetaAnalyticsDataClient
 
 
 def initialize_firebase():
@@ -24,18 +26,19 @@ def initialize_firebase():
 
 
 def initialize_google_analytics():
+    """Initializes a BetaAnalyticsDataClient object."""
+
     # Load Google Analytics credentials from a JSON file
     credentials_path = os.path.join(os.path.dirname(
         __file__), '../../../config/google_analytics_4.json')
     with open(credentials_path) as f:
         json_acct_info = json.load(f)
 
-        # analytics_config = credentials['analytics_config']
+    # Create credentials object with the required scope
+    credentials = Credentials.from_service_account_info(
+        json_acct_info).with_scopes(["https://www.googleapis.com/auth/analytics.readonly"])
 
-    # Create a service object for the Google Analytics Reporting API
-    credentials = service_account.Credentials.from_service_account_info(
-        json_acct_info)
+    # Create a BetaAnalyticsDataClient object
+    client = BetaAnalyticsDataClient(credentials=credentials)
 
-    service = build('analyticsreporting', 'v4', credentials=credentials)
-
-    return service
+    return client

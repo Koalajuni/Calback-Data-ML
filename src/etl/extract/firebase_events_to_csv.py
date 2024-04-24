@@ -77,5 +77,7 @@ if __name__ == '__main__':
 
     output_csv_path = '/Users/hyounjun/Desktop/Calback-Data-ML/data/raw/events/output.csv'
 
-    export_events_to_csv(output_csv_path,
-                         date_range_start, date_range_end)
+    # export_events_to_csv(output_csv_path,
+    #                      date_range_start, date_range_end)
+
+    sample_run_report(327848427)
