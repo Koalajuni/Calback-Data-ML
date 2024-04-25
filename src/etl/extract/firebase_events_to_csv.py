@@ -45,39 +45,37 @@ def export_events_to_csv(output_csv_path, date_range_start, date_range_end):
         print('Error exporting events data to CSV:', e)
 
 
-def sample_run_report(property_id):
-    """Runs a simple report on a Google Analytics 4 property."""
-    # TODO(developer): Uncomment this variable and replace with your
-    #  Google Analytics 4 property ID before running the sample.
-    # property_id = "YOUR-GA4-PROPERTY-ID"
-
-    # Using a default constructor instructs the client to use the credentials
-    # specified in GOOGLE_APPLICATION_CREDENTIALS environment variable.
+def run_report_with_multiple_metrics(property_id):
+    """Runs a report of users with a specific custom event, new users and total revenue grouped by
+    date dimension."""
     client = BetaAnalyticsDataClient()
 
+    # Runs a report with user_pseudo_id for event and other metrics
     request = RunReportRequest(
         property=f"properties/{property_id}",
-        dimensions=[Dimension(name="city")],
-        metrics=[Metric(name="activeUsers")],
-        date_ranges=[DateRange(start_date="2024-02-27", end_date="today")],
+        dimensions=[Dimension(name="customEvent:MID")],
+        # metrics=[
+        #     Metric(name=""),
+        #     # Metric(name="first_open:event_uid"),
+        #     # Metric(name="categories_tag_tap:event_uid"),
+        # ],
+        date_ranges=[DateRange(start_date="2024-01-08",
+                               end_date="2024-04-08")],
     )
     response = client.run_report(request)
-
-    print("Report result:")
-    for row in response.rows:
-        print(row.dimension_values[0].value, row.metric_values[0].value)
+    print(response)
 
 
-if __name__ == '__main__':
+# if __name__ == '__main__':
 
-    google_analytics_service = initialize_google_analytics()
+#     google_analytics_service = initialize_google_analytics()
 
-    date_range_start = '2024-03-01'
-    date_range_end = '2024-03-14'
+#     date_range_start = '2024-03-01'
+#     date_range_end = '2024-03-14'
 
-    output_csv_path = '/Users/hyounjun/Desktop/Calback-Data-ML/data/raw/events/output.csv'
+#     output_csv_path = '/Users/hyounjun/Desktop/Calback-Data-ML/data/raw/events/output.csv'
 
     # export_events_to_csv(output_csv_path,
     #                      date_range_start, date_range_end)
 
-    sample_run_report(327848427)
+run_report_with_multiple_metrics("327848427")
