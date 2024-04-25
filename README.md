@@ -121,6 +121,13 @@ airflow webserver를 통해 태스크들이 잘 작동되고 있는지 확인할
 <img src="https://github.com/Koalajuni/Calback-Data-ML/assets/98198915/922a29a2-d8e4-4917-ada4-08e725045b01" width="500" height="500">
 
 
+## 문제 2: 데이터의 파편화 및 GA4 API 추출 작업 활성화
+**업데이트 상황:**
+
+GA4를 활용해 데이터를 한번에 csv형태로 옮기려고 헀으나... 생각보다 깔끔하게 데이터를 정리하는 게 쉽지 않다는 것을 느꼈다. 우선 앱에서 사용한 커스텀 이벤트를 사용하고 싶으면, 직접 Custom Dimension과 Custom Metric 따로 만들어줘야 한다. 다행히 몇개는 이미 만들어져 있는 상태였지만, Exploratory Data Analysis를 위한 모든 Feature들을 활성화하지 못했기 때문에 해당 피처들을 사용 못할 수도 있겠다는 어려움에 봉착했다. 하지만 방법은 있을 것 같아, 다른 방식으로 Raw Data를 얻으면 될 것으로 보인다. 데이터를 따로 따로 추출한 후, 나중에 테이블에서 모두 join하는 방식으로 우회해야 할 것 같다. 
+
+
+
 
 
 
